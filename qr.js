@@ -1,4 +1,3 @@
-(async () => {
 const { makeid } = require('./gen-id');
 const express = require('express');
 const QRCode = require('qrcode');
@@ -172,5 +171,3 @@ setInterval(() => {
 }, 180000); //30min
 module.exports = router;
             
-
-})();
