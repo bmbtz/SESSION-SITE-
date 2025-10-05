@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NOVA XMD | WHATSAPP BOT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #8a2be2;
+            --secondary: #9400d3;
+            --dark: #0a0b18;
+            --night: #040510;
+            --light: #f8f9fa;
+            --accent: #54a1ff;
+            --transition: all 0.3s ease-in-out;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: var(--night);
+            color: var(--light);
+            min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        canvas#tech-bg {
+            position: fixed;
+            left: 0; top: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+            background: transparent;
+        }
+        body > *:not(#tech-bg) {
+            position: relative;
+            z-index: 1;
+        }
+
+        .navbar {
+            background: rgba(10, 11, 24, 0.94);
+            backdrop-filter: blur(14px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.35);
+            transition: var(--transition);
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--light);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            color: var(--primary);
+            font-size: 1.8rem;
+            animation: pulse 2s infinite;
+        }
+
+        .menu {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .menu a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+            padding: 0.5rem 0;
+            transition: var(--transition);
+        }
+
+        .menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            transition: var(--transition);
+        }
+
+        .menu a:hover::after {
+            width: 100%;
+        }
+
+        .menu a:hover {
+            color: var(--accent);
+        }
+
+        /* .menu-toggle removed completely */
+
+        .hero {
+            padding: 8rem 2rem 4rem;
+            text-align: center;
+            background: linear-gradient(135deg, var(--night) 0%, #13143d 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(ellipse at top right, rgba(84,161,255,0.16) 0%, transparent 70%) , radial-gradient(ellipse at bottom left, rgba(138,43,226,0.10) 0%, transparent 80%);
+            opacity: 1;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: fadeIn 1.5s ease-in-out;
+            text-shadow: 0 0 15px #0d0054, 0 0 7px #8a2be2;
+        }
+
+        .typing-text {
+            display: inline-block;
+            overflow: hidden;
+            border-right: 3px solid var(--accent);
+            white-space: nowrap;
+            margin: 0 auto;
+            letter-spacing: 2px;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out 1.5s forwards;
+            color: #c0d5ff;
+            text-shadow: 0 0 7px #13143d;
+        }
+
+        .cards-section {
+            padding: 4rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card {
+            background: rgba(24, 25, 56, 0.84);
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+            backdrop-filter: blur(13px);
+            border: 1px solid rgba(84,161,255, 0.12);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease-out forwards;
+            box-shadow: 0 2px 18px 0 rgba(0,0,0,0.22);
+        }
+
+        .card:nth-child(1) { animation-delay: 0.2s; }
+        .card:nth-child(2) { animation-delay: 0.4s; }
+        .card:nth-child(3) { animation-delay: 0.6s; }
+        .card:nth-child(4) { animation-delay: 0.8s; }
+        .card:nth-child(5) { animation-delay: 1s; }
+        .card:nth-child(6) { animation-delay: 1.2s; }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(84,161,255, 0.28);
+            background: rgba(84,161,255, 0.1);
+        }
+
+        .card i {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+            transition: var(--transition);
+            text-shadow: 0 0 10px #54a1ff, 0 0 6px #9400d3;
+        }
+
+        .card:hover i {
+            transform: scale(1.2);
+            color: var(--primary);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--light);
+        }
+
+        .card p {
+            color: #b6b8d6;
+            font-size: 1rem;
+        }
+
+        .description {
+            padding: 4rem 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 1s ease-in-out 1.8s forwards;
+        }
+
+        .description p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            color: #b6b8d6;
+        }
+
+        .highlight {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        footer {
+            background: rgba(10, 11, 24, 0.98);
+            padding: 2rem;
+            text-align: center;
+            margin-top: auto;
+            backdrop-filter: blur(10px);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: var(--light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            color: #b6b8d6;
+            font-size: 0.9rem;
+        }
+
+        .copyright a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--accent) }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0 }
+            to { opacity: 1 }
+        }
+
+        @keyframes fadeInUp {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        @media (max-width: 768px) {
+            .menu {
+                position: fixed;
+                top: 70px;
+                left: 0;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background: rgba(10, 11, 24, 0.97);
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                gap: 2rem;
+                transition: var(--transition);
+                backdrop-filter: blur(15px);
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .cards-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Right-click restriction message */
+        #rightClickMessage {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(10, 11, 24, 0.97);
+            color: var(--accent);
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(84,161,255, 0.25);
+            z-index: 9999;
+            font-size: 1.2rem;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            border: 1px solid var(--accent);
+        }
+    </style>
+</head>
+<body>
+    <canvas id="tech-bg"></canvas>
+    <!-- Background music: hidden -->
+    <audio src="https://files.catbox.moe/5ku4kp.mp3" autoplay loop hidden style="display:none"></audio>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="#" class="logo">
+                <i class="fas fa-robot logo-icon"></i>
+                <span>NOVA-XMD</span>
+        </div>
+    </nav>
+
+    <section class="cards-section">
+        <h2 style="text-align: center; width: 100%; font-size: 2.2rem; margin-bottom: 2rem; color: #f8f9fa; opacity: 0; animation: fadeIn 1s ease-in-out 1s forwards;">
+            PAIR CODE SITE
+        </h2>
+        <div class="cards-container">
+            <div class="card" data-url="./pair">
+                <i class="fas fa-link"></i>
+                <h3>PAIR CODE</h3>
+                <p>Connect Via Pairing Code</p>
+            </div>
+            
+            <div class="card" data-url="./qr">
+                <i class="fas fa-qrcode"></i>
+                <h3>QR CODE</h3>
+                <p>Connect Via Scanning QR Code</p>
+            </div>
+            
+            <div class="card" data-url="https://github.com/novaxmd/NOVA-XMD/fork" target="_blank">
+                <i class="fab fa-github"></i>
+                <h3>BOT REPO</h3>
+                <p>Check out the Source Code</p>
+            </div>
+            
+            <div class="card" data-url="https://whatsapp.com/channel/0029VawO6hgF6sn7k3SuVU3z" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+                <h3>CHANNEL</h3>
+                <p>join channel</p>
+            </div>
+            
+            <div class="card" data-url="https://chat.whatsapp.com/BKoqNbYGCkK5apBNP0nzI3" target="_blank">
+                <i class="fab fa-whatsapp"></i>
+                <h3>JOIN GROUP</h3>
+                <p>Join for Updates & Announcements</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#" data-url="https://github.com/novaxmd" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="#" data-url="https://chat.whatsapp.com/BKoqNbYGCkK5apBNP0nzI3" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="#" data-url="https://whatsapp.com/channel/0029VawO6hgF6sn7k3SuVU3z" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            </div>
+            <p class="copyright">
+                &copy; <span id="currentYear"></span> Made by <a href="#" data-url="https://bmbtech.online" target="_blank">Nova Xmd</a>
+            </p>
+        </div>
+    </footer>
+
+    <div id="rightClickMessage">Action Prohibited by Nova xmd</div>
+
+    <script>
+        // Tech night animated background
+        const canvas = document.getElementById('tech-bg');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        function resizeCanvas() {
+            width = window.innerWidth;
+            height = window.innerHeight;
+            canvas.width = width;
+            canvas.height = height;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const dots = [];
+        const dotCount = 80;
+        for (let i = 0; i < dotCount; i++) {
+            dots.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: (Math.random() - 0.5) * 0.5,
+                vy: (Math.random() - 0.5) * 0.5,
+                r: Math.random() * 2 + 1,
+                glow: Math.random() * 20 + 10
+            });
+        }
+
+        function drawTechNight() {
+            ctx.clearRect(0, 0, width, height);
+            // Draw dots/stars
+            for (let i = 0; i < dotCount; i++) {
+                let d = dots[i];
+                ctx.beginPath();
+                ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+                ctx.fillStyle = "rgba(84,161,255,0.85)";
+                ctx.shadowColor = "#54a1ff";
+                ctx.shadowBlur = d.glow;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+            }
+            // Draw lines
+            for (let i = 0; i < dotCount; i++) {
+                for (let j = i + 1; j < dotCount; j++) {
+                    let a = dots[i], b = dots[j];
+                    let dist = Math.hypot(a.x - b.x, a.y - b.y);
+                    if (dist < 110) {
+                        ctx.beginPath();
+                        ctx.moveTo(a.x, a.y);
+                        ctx.lineTo(b.x, b.y);
+                        ctx.strokeStyle = "rgba(138,43,226," + (1 - dist/110) * 0.6 + ")";
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                }
+            }
+            // Move dots
+            for (let i = 0; i < dotCount; i++) {
+                let d = dots[i];
+                d.x += d.vx;
+                d.y += d.vy;
+                if (d.x < 0 || d.x > width) d.vx *= -1;
+                if (d.y < 0 || d.y > height) d.vy *= -1;
+            }
+            requestAnimationFrame(drawTechNight);
+        }
+        drawTechNight();
+
+        // Removed menuToggle and related code
+        // Only left menuLinks close on click
+
+        const menuLinks = document.querySelectorAll('.menu a');
+        menuLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                // No menuToggle anymore, so just close menu if you want responsive
+            });
+        });
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        const cards = document.querySelectorAll('.card');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = `fadeInUp 0.8s ease-out forwards`;
+                }
+            });
+        }, { threshold: 0.1 });
+        cards.forEach(card => {
+            observer.observe(card);
+        });
+        document.querySelectorAll('[data-url]').forEach(element => {
+            element.addEventListener('click', function(e) {
+                e.preventDefault();
+                const url = this.getAttribute('data-url');
+                const target = this.getAttribute('target') || '_self';
+                window.open(url, target);
+            });
+        });
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+            const message = document.getElementById('rightClickMessage');
+            message.style.display = 'block';
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 2000);
+        });
+        document.querySelectorAll('[data-url]').forEach(link => {
+            link.addEventListener('dragstart', function(e) {
+                e.preventDefault();
+            });
+        });
+        document.addEventListener('selectstart', function(e) {
+            e.preventDefault();
+        });
+    </script>
+</body>
+</html>
