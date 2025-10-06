@@ -70,36 +70,36 @@ var randomItem = selectRandomItem(items);
                         const { upload } = require('./mega');
                         const mega_url = await upload(fs.createReadStream(rf), `${sock.user.id}.json`);
                         const string_session = mega_url.replace('https://mega.nz/file/', '');
-                        let md = "NOVA~" + string_session;
+                        let md = "POPKID;;;" + string_session;
                         let code = await sock.sendMessage(sock.user.id, { text: md });
                         let desc = `*╭━━━━━━━━━━━━━━━━━━━━━╮
-┃  🩵 𝗡𝗢𝗩𝗔-𝗫𝗠𝗗 USER 🩵  ┃
+┃  🩵 POPKID-XTR USER 🩵  ┃
 ╰━━━━━━━━━━━━━━━━━━━━━╯
 
-🙋 Hello there, 𝗡𝗢𝗩𝗔-𝗫𝗠𝗗 User!  
+🙋 Hello there, POPKID-XTR User!  
 
 > ⚠️ *Do not share your session ID with your GF!* 🤖 
 
-✅ **Thanks for using 𝗡𝗢𝗩𝗔-𝗫𝗠𝗗!** 🔰 
+✅ **Thanks for using POPKID-XTR!** 🔰 
 
 ━━━━━━━━━━━━━━━━━━━━━━━  
 
 📢 **Join our WhatsApp Channel:**  
-🔗 https://whatsapp.com/channel/0029VawO6hgF6sn7k3SuVU3z  
+🔗 https://whatsapp.com/channel/0029VbB6d0KKAwEdvcgqrH26  
 
 ⭐ **Don't forget to fork the repo:**  
-🔗 https://github.com/novaxmd/NOVA-XMD 
+🔗 https://github.com/kenyanpopkid/POPKID-XTR 
 
 ━━━━━━━━━━━━━━━━━━━━━━━  
 
-> *© Powered by 𝙽𝙾𝚅𝙰-𝚇𝙼𝙳 🩵*`;
+> *© popkid devs 🩵*`;
                         await sock.sendMessage(sock.user.id, {
 text: desc,
 contextInfo: {
 externalAdReply: {
 title: " 𝖇𝖔𝖙 𝖈𝖔𝖓𝖓𝖊𝖈𝖙𝖊𝖉",
-thumbnailUrl: "https://files.catbox.moe/wqc6mx.jpg",
-sourceUrl: "https://whatsapp.com/channel/0029VawO6hgF6sn7k3SuVU3z",
+thumbnailUrl: "https://i.ibb.co/6cBHT8tC/popkid.jpg",
+sourceUrl: "https://whatsapp.com/channel/0029VbB6d0KKAwEdvcgqrH26",
 mediaType: 1,
 renderLargerThumbnail: true
 }  
@@ -109,22 +109,22 @@ renderLargerThumbnail: true
                     } catch (e) {
                             let ddd = sock.sendMessage(sock.user.id, { text: e });
                             let desc = `*╭━━━━━━━━━━━━━━━━━━━━━╮
-┃  🩵 𝗡𝗢𝗩𝗔-𝗫𝗠𝗗 USER 🩵 ┃
+┃  🩵 POPKID-XTR USER 🩵 ┃
 ╰━━━━━━━━━━━━━━━━━━━━━╯
 
-🙋 Hello there 𝗡𝗢𝗩𝗔-𝗫𝗠𝗗 User!  
+🙋 Hello there POPKID-XTR User!  
 
 > ⚠️ *Do not share your session ID with your GF!* 🤖  
 
-✅ **Thanks for using 𝗡𝗢𝗩𝗔-𝗫𝗠𝗗!** 🔰  
+✅ **Thanks for using POPKID-XTR!** 🔰  
 
 ━━━━━━━━━━━━━━━━━━━━━━━  
 
 📢 **Join our WhatsApp Channel:**  
-🔗 https://whatsapp.com/channel/0029VawO6hgF6sn7k3SuVU3z  
+🔗 https://whatsapp.com/channel/0029VbB6d0KKAwEdvcgqrH26  
 
 ⭐ **Don't forget to fork the repo:**  
-🔗 https://github.com/novaxmd/NOVA-XMD   
+🔗 https://github.com/kenyanpopkid/POPKID-XTR   
 
 ━━━━━━━━━━━━━━━━━━━━━━━  
 
@@ -134,8 +134,8 @@ text: desc,
 contextInfo: {
 externalAdReply: {
 title: " 𝖒𝖉 𝖈𝖔𝖓𝖓𝖊𝖈𝖙𝖊𝖉 ✅  ",
-thumbnailUrl: "https://files.catbox.moe/wqc6mx.jpg",
-sourceUrl: "https://whatsapp.com/channel/0029VawO6hgF6sn7k3SuVU3z",
+thumbnailUrl: "https://i.ibb.co/6cBHT8tC/popkid.jpg",
+sourceUrl: "https://whatsapp.com/channel/0029VbB6d0KKAwEdvcgqrH26",
 mediaType: 2,
 renderLargerThumbnail: true,
 showAdAttribution: true
